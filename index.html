@@ -329,13 +329,11 @@
 </ol>
 <p>详细的SW研究后面再写，有点跑题跑远了，service workers有一个要求，网站必须是支持https的，http下是无法使用sw服务的，加上IOS即将对所有APP中内置的页面强制使用https，这就导致我们必须在本地开发环境中，先把https服务架起来，那该怎么搞？</p>
 <h2 id="如何在本机架设https"><a href="#如何在本机架设https" class="headerlink" title="如何在本机架设https?"></a>如何在本机架设https?</h2><p>由于前端开发，所以本地全部都是Node环境，自己博客也是基于Node的hexo程序，目标是让博客支持SW服务，那具体来说就是如何在本地NODE服务器上添加https支持，本着深挖学习的精神，我们得先了解下https都是个啥？</p>
-<h3 id="Https是个啥？"><a href="#Https是个啥？" class="headerlink" title="Https是个啥？"></a>Https是个啥？</h3><p>HTTPS (基于安全套接字层的超文本传输协议 或者是 HTTP over SSL) 是一个 Netscape 开发的 Web 协议。</p>
+<h2 id="Https是个啥？"><a href="#Https是个啥？" class="headerlink" title="Https是个啥？"></a>Https是个啥？</h2><p>HTTPS (基于安全套接字层的超文本传输协议 或者是 HTTP over SSL) 是一个 Netscape 开发的 Web 协议。</p>
 <p>你也可以说：HTTPS = HTTP + SSL</p>
 <p>HTTPS 在 HTTP 应用层的基础上使用安全套接字层作为子层。</p>
-<p>###为什么需要Https?</p>
-<p>我们知道，Http是使用请求/响应的过程，因此信息可在服务器间快速、轻松而且精确的进行传输。当你访问 Web 页面的时候你就是在使用 HTTP 协议，但 HTTP 是不安全的，可以轻松对窃听你跟 Web 服务器之间的数据传输。在很多情况下，客户和服务器之间传输的是敏感歇息，需要防止未经授权的访问。为了满足这个要求，HTTPS应运而生。</p>
-<p>###HTTPS与HTTPS有什么不同？</p>
-<ol>
+<h2 id="为什么需要Https"><a href="#为什么需要Https" class="headerlink" title="为什么需要Https?"></a>为什么需要Https?</h2><p>我们知道，Http是使用请求/响应的过程，因此信息可在服务器间快速、轻松而且精确的进行传输。当你访问 Web 页面的时候你就是在使用 HTTP 协议，但 HTTP 是不安全的，可以轻松对窃听你跟 Web 服务器之间的数据传输。在很多情况下，客户和服务器之间传输的是敏感歇息，需要防止未经授权的访问。为了满足这个要求，HTTPS应运而生。</p>
+<h2 id="HTTPS与HTTPS有什么不同？"><a href="#HTTPS与HTTPS有什么不同？" class="headerlink" title="HTTPS与HTTPS有什么不同？"></a>HTTPS与HTTPS有什么不同？</h2><ol>
 <li>URL开头是以Https开始</li>
 <li>默认端口为443</li>
 <li>Https工作在传输层</li>
@@ -356,8 +354,7 @@
 <p><img src="http://image.beekka.com/blog/2014/bg2014092003.png" alt=""></p>
 </blockquote>
 <p>以上，通过这个原理学习，我们发现，想在本地搭建HTTPS，必须得先有个证书，那么该怎么操作呢？</p>
-<p>###开始搭建基于NODE SERVER的HTTPS服务</p>
-<ol>
+<h2 id="开始搭建基于NODE-SERVER的HTTPS服务"><a href="#开始搭建基于NODE-SERVER的HTTPS服务" class="headerlink" title="开始搭建基于NODE SERVER的HTTPS服务"></a>开始搭建基于NODE SERVER的HTTPS服务</h2><ol>
 <li>简而言之，我们需要SSL证书，事实上有两种证书：一种是由‘Certificate Authority’【权威认证】签发的，或者也叫CA；另外一种是由‘self-signed certificates’【私有证书】来生成的。使用权威认证签发的证书，会告诉你用户的浏览器，这个网站是可信的安全的，对于正式产品线上环境来说，这个肯定是首选；而私有证书则是部署测试环境的最佳选择，因为在localhost嘛，所以就选私有就好了。</li>
 </ol>
 <p>想要创建私有证书，在你的shell里运行以下命令：</p>
@@ -385,8 +382,7 @@ var a = https.createServer(options, function (req, res) {
 <p>OK，现在服务就起来了，跑下看看呗：</p>
 <pre><code>https://localhost:8000
 </code></pre><p>很简单吧？ 等等，不是说要在博客里实现吗？那在hexo里怎么搞？</p>
-<p>##让Hexo本地服务支持https的方法</p>
-<p>参照上面第一步生成证书文件，如下图：</p>
+<h2 id="让Hexo本地服务支持https的方法"><a href="#让Hexo本地服务支持https的方法" class="headerlink" title="让Hexo本地服务支持https的方法"></a>让Hexo本地服务支持https的方法</h2><p>参照上面第一步生成证书文件，如下图：</p>
 <p><img src="http://i.imgur.com/vt0CuU2.png" alt=""></p>
 <p>找到node_modules/hexo-server/lib/server.js 并做如下修改：</p>
 <p><img src="http://i.imgur.com/8WpSjOI.png" alt=""></p>
@@ -602,6 +598,13 @@ var a = https.createServer(options, function (req, res) {
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
           
 
         </nav>
