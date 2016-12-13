@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://i.imgur.com/c86xO0n.png">
 <meta property="og:image" content="http://i.imgur.com/az2uwif.png">
 <meta property="og:image" content="http://i.imgur.com/tF9dpi5.png">
-<meta property="og:updated_time" content="2016-12-12T13:36:21.621Z">
+<meta property="og:updated_time" content="2016-12-13T01:33:58.289Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="service worker探究系列(一)：小实验，让hexo博客程序本机支持https">
 <meta name="twitter:description" content="最近看到谷歌开放了中国区域的开发者网站developers.google.cn，无需翻墙就能看到很多的谷歌技术，于是看了一下自己关心的技术领域，发现在web基础这块，谷歌在搞推送通知(web Push Notifications)，这块一直是我比较关心的领域，仔细阅读了下，发现还是基于service workers来的，service workers其实2014年就推出了草案，之前推的是一个叫Ap">
@@ -360,17 +360,13 @@
 <p><img src="http://image.beekka.com/blog/2014/bg2014092003.png" alt=""></p>
 </blockquote>
 <p>以上，通过这个原理学习，我们发现，想在本地搭建HTTPS，必须得先有个证书，那么该怎么操作呢？</p>
-<h2 id="开始搭建基于NODE-SERVER的HTTPS服务"><a href="#开始搭建基于NODE-SERVER的HTTPS服务" class="headerlink" title="开始搭建基于NODE SERVER的HTTPS服务"></a>开始搭建基于NODE SERVER的HTTPS服务</h2><ol>
-<li>简而言之，我们需要SSL证书，事实上有两种证书：一种是由‘Certificate Authority’【权威认证】签发的，或者也叫CA；另外一种是由‘self-signed certificates’【私有证书】来生成的。使用权威认证签发的证书，会告诉你用户的浏览器，这个网站是可信的安全的，对于正式产品线上环境来说，这个肯定是首选；而私有证书则是部署测试环境的最佳选择，因为在localhost嘛，所以就选私有就好了。</li>
-</ol>
+<h2 id="开始搭建基于NODE-SERVER的HTTPS服务"><a href="#开始搭建基于NODE-SERVER的HTTPS服务" class="headerlink" title="开始搭建基于NODE SERVER的HTTPS服务"></a>开始搭建基于NODE SERVER的HTTPS服务</h2><p>简而言之，我们需要SSL证书，事实上有两种证书：一种是由‘Certificate Authority’【权威认证】签发的，或者也叫CA；另外一种是由‘self-signed certificates’【私有证书】来生成的。使用权威认证签发的证书，会告诉你用户的浏览器，这个网站是可信的安全的，对于正式产品线上环境来说，这个肯定是首选；而私有证书则是部署测试环境的最佳选择，因为在localhost嘛，所以就选私有就好了。</p>
 <p>想要创建私有证书，在你的shell里运行以下命令：</p>
 <pre><code>openssl genrsa -out key.pem
 openssl req -new -key key.pem -out csr.pem
 openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
-</code></pre><ol>
-<li>你会得到两个文件，一个是cert.pem(证书)，一个是key.pem（私钥）。这就是你所需要的所有SSL证书了。使用NODE的的话，可以快速搞个hello world了：</li>
-</ol>
+</code></pre><p>你会得到两个文件，一个是cert.pem(证书)，一个是key.pem（私钥）。这就是你所需要的所有SSL证书了。使用NODE的的话，可以快速搞个hello world了：</p>
 <pre><code>var https = require(&apos;https&apos;);
 var fs = require(&apos;fs&apos;);
 
